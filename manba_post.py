@@ -18,6 +18,7 @@ GitHub Secrets: ANTHROPIC_API_KEY, BOT_TOKEN, KANAL, PEXELS_API_KEY
 import html
 import json
 import os
+import random
 import re
 import sys
 import urllib.error
@@ -81,20 +82,36 @@ def matn_ajratib_ol(url):
     return matn[:MAX_MANBA_BELGI]
 
 
+def barcha_juftlar():
+    """
+    Barcha (manba, burchak) juftlarini BIR XIL tartibda qaytaradi.
+
+    Tartib aralashtirilgan, lekin urug' (seed) qat'iy — shuning uchun
+    har safar bir xil ketma-ketlik chiqadi va jadvalni oldindan ko'rish mumkin.
+    Aralashtirishdan maqsad: ketma-ket kunlarda bir xil uslubdagi postlar
+    chiqib qolmasligi.
+    """
+    cfg = json.loads(MANBALAR_FAYL.read_text(encoding="utf-8"))
+    juftlar = [
+        ("{}|{}".format(manba["url"], b_raqam), manba, burchak)
+        for b_raqam, burchak in enumerate(cfg["burchaklar"])
+        for manba in cfg["manbalar"]
+    ]
+    random.Random(20260823).shuffle(juftlar)
+    return juftlar
+
+
 def navbatdagi_juft():
     """Hali ishlatilmagan (manba, burchak) juftini qaytaradi."""
-    cfg = json.loads(MANBALAR_FAYL.read_text(encoding="utf-8"))
     ishlatilgan = set()
     if ISHLATILGAN_FAYL.exists():
         ishlatilgan = set(ISHLATILGAN_FAYL.read_text(encoding="utf-8").splitlines())
 
-    jami = len(cfg["manbalar"]) * len(cfg["burchaklar"])
-    for b_raqam, burchak in enumerate(cfg["burchaklar"]):
-        for manba in cfg["manbalar"]:
-            kalit = "{}|{}".format(manba["url"], b_raqam)
-            if kalit not in ishlatilgan:
-                return kalit, manba, burchak, len(ishlatilgan), jami
-    return None, None, None, len(ishlatilgan), jami
+    juftlar = barcha_juftlar()
+    for kalit, manba, burchak in juftlar:
+        if kalit not in ishlatilgan:
+            return kalit, manba, burchak, len(ishlatilgan), len(juftlar)
+    return None, None, None, len(ishlatilgan), len(juftlar)
 
 
 def post_yozdir(mavzu, burchak, manba_matni, manba_nomi):
