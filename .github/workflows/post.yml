@@ -1,0 +1,40 @@
+name: Kanalga post yuborish
+
+on:
+  schedule:
+    # 05:00 UTC = Toshkent vaqti bilan 10:00
+    - cron: '0 5 * * *'
+  workflow_dispatch:        # Qo'lda ishga tushirish tugmasi
+
+permissions:
+  contents: write           # yuborilgan.txt ni qaytib yozish uchun
+
+concurrency:
+  group: post-yuborish
+  cancel-in-progress: false
+
+jobs:
+  yubor:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kodni olish
+        uses: actions/checkout@v4
+
+      - name: Python o'rnatish
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Postni yuborish
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          KANAL: ${{ secrets.KANAL }}
+        run: python yubor.py
+
+      - name: Holatni saqlash
+        run: |
+          git config user.name  "Sofia Expert Bot"
+          git config user.email "actions@github.com"
+          git add yuborilgan.txt jurnal.log
+          git diff --staged --quiet || git commit -m "Post yuborildi: $(date -u '+%Y-%m-%d')"
+          git push
