@@ -1,0 +1,47 @@
+{
+  "_izoh": "Ochiq mulk (public domain) manbalar: NIH/NIAMS va MedlinePlus davlat sahifalari. Matnlarini erkin tarjima va qayta ishlash mumkin. Rasmlar OLINMAYDI - ular himoyalangan. A.D.A.M. Encyclopedia (medlineplus.gov/ency/...) sahifalari MUALLIFLIK HUQUQI bilan himoyalangan, ro'yxatga qo'shmang.",
+
+  "burchaklar": [
+    "Bu holat nima va nega paydo bo'ladi - sabablarini tushuntiring",
+    "Belgilari qanday - o'quvchi o'zini tanib olishi uchun",
+    "Qanday davolanadi - qanday yondashuvlar mavjud",
+    "Uy sharoitida nima qilish mumkin va nima qilib bo'lmaydi",
+    "Profilaktika - oldini olish yo'llari",
+    "Qachon mutaxassisga murojaat qilish kerak - ogohlantiruvchi belgilar",
+    "Shu mavzudagi keng tarqalgan noto'g'ri tushunchalar va haqiqat"
+  ],
+
+  "manbalar": [
+    {"mavzu": "Husnbuzar (akne)",          "url": "https://www.niams.nih.gov/health-topics/acne"},
+    {"mavzu": "Rozatsea",                  "url": "https://www.niams.nih.gov/health-topics/rosacea"},
+    {"mavzu": "Atopik dermatit (ekzema)",  "url": "https://www.niams.nih.gov/health-topics/atopic-dermatitis"},
+    {"mavzu": "Psoriaz",                   "url": "https://www.niams.nih.gov/health-topics/psoriasis"},
+    {"mavzu": "Vitiligo",                  "url": "https://www.niams.nih.gov/health-topics/vitiligo"},
+    {"mavzu": "Alopetsiya (soch to'kilishi)", "url": "https://www.niams.nih.gov/health-topics/alopecia-areata"},
+    {"mavzu": "Gidradenit",                "url": "https://www.niams.nih.gov/health-topics/hidradenitis-suppurativa-hs"},
+    {"mavzu": "Ixtioz (quruq teri)",       "url": "https://www.niams.nih.gov/health-topics/ichthyosis"},
+
+    {"mavzu": "Terining qarishi",          "url": "https://medlineplus.gov/skinaging.html"},
+    {"mavzu": "Quyosh ta'siri",            "url": "https://medlineplus.gov/sunexposure.html"},
+    {"mavzu": "Solyariy va tanlanish",     "url": "https://medlineplus.gov/tanning.html"},
+    {"mavzu": "Teri saratoni",             "url": "https://medlineplus.gov/skincancer.html"},
+    {"mavzu": "Melanoma",                  "url": "https://medlineplus.gov/melanoma.html"},
+    {"mavzu": "Xollar",                    "url": "https://medlineplus.gov/moles.html"},
+    {"mavzu": "Pigmentatsiya buzilishlari","url": "https://medlineplus.gov/skinpigmentationdisorders.html"},
+    {"mavzu": "Chandiqlar",                "url": "https://medlineplus.gov/scars.html"},
+    {"mavzu": "Teri holatlari (umumiy)",   "url": "https://medlineplus.gov/skinconditions.html"},
+    {"mavzu": "Qichishish",                "url": "https://medlineplus.gov/itching.html"},
+    {"mavzu": "Toshmalar",                 "url": "https://medlineplus.gov/rashes.html"},
+    {"mavzu": "Eshakyem (krapivnitsa)",    "url": "https://medlineplus.gov/hives.html"},
+    {"mavzu": "Soch to'kilishi",           "url": "https://medlineplus.gov/hairloss.html"},
+    {"mavzu": "Soch muammolari",           "url": "https://medlineplus.gov/hairproblems.html"},
+    {"mavzu": "Qazg'oq va bosh terisi",    "url": "https://medlineplus.gov/dandruffcradlecapandotherscalpconditions.html"},
+    {"mavzu": "Tirnoq kasalliklari",       "url": "https://medlineplus.gov/naildiseases.html"},
+    {"mavzu": "Zamburug'li infeksiyalar",  "url": "https://medlineplus.gov/tineainfections.html"},
+    {"mavzu": "So'gallar",                 "url": "https://medlineplus.gov/warts.html"},
+    {"mavzu": "Pirsing va tatuirovka",     "url": "https://medlineplus.gov/piercingandtattoos.html"},
+    {"mavzu": "Qadoq va suyaklar",         "url": "https://medlineplus.gov/cornsandcalluses.html"},
+    {"mavzu": "Ko'karishlar",              "url": "https://medlineplus.gov/bruises.html"},
+    {"mavzu": "Kuyishlar",                 "url": "https://medlineplus.gov/burns.html"}
+  ]
+}

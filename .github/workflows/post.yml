@@ -2,12 +2,13 @@ name: Kanalga post yuborish
 
 on:
   schedule:
-    # 05:00 UTC = Toshkent vaqti bilan 10:00
-    - cron: '0 5 * * *'
-  workflow_dispatch:        # Qo'lda ishga tushirish tugmasi
+    # UTC vaqti. Toshkent = UTC + 5 soat.
+    # 05:00->10:00  08:00->13:00  11:00->16:00  14:00->19:00  16:00->21:00
+    - cron: '0 5,8,11,14,16 * * *'
+  workflow_dispatch:
 
 permissions:
-  contents: write           # yuborilgan.txt ni qaytib yozish uchun
+  contents: write
 
 concurrency:
   group: post-yuborish
@@ -24,24 +25,32 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+          cache: pip
+
+      - name: Kutubxonalarni o'rnatish
+        run: pip install -r requirements.txt
 
       - name: Secretlarni tekshirish
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           KANAL: ${{ secrets.KANAL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           xato=0
           if [ -z "$BOT_TOKEN" ]; then
-            echo "::error::BOT_TOKEN secret topilmadi yoki bo'sh."
-            xato=1
+            echo "::error::BOT_TOKEN secret topilmadi yoki bo'sh."; xato=1
           else
             echo "BOT_TOKEN: topildi (${#BOT_TOKEN} belgi)"
           fi
           if [ -z "$KANAL" ]; then
-            echo "::error::KANAL secret topilmadi yoki bo'sh."
-            xato=1
+            echo "::error::KANAL secret topilmadi yoki bo'sh."; xato=1
           else
             echo "KANAL: $KANAL"
+          fi
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::warning::ANTHROPIC_API_KEY yo'q. Qo'lda yozilgan postlar ishlaydi, AI postlar ishlamaydi."
+          else
+            echo "ANTHROPIC_API_KEY: topildi (${#ANTHROPIC_API_KEY} belgi)"
           fi
           exit $xato
 
@@ -49,19 +58,22 @@ jobs:
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           KANAL: ${{ secrets.KANAL }}
-        run: python yubor.py
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python kunlik.py
 
       - name: Holatni saqlash
+        if: always()
         run: |
           git config user.name  "Sofia Expert Bot"
           git config user.email "actions@github.com"
-          git add yuborilgan.txt jurnal.log
+          git add -A yuborilgan.txt ishlatilgan.txt jurnal.log 2>/dev/null || true
           if git diff --staged --quiet; then
-            echo "O'zgarish yo'q, saqlash shart emas."
+            echo "O'zgarish yo'q."
           else
-            git commit -m "Post yuborildi: $(date -u '+%Y-%m-%d')"
+            git commit -m "Post yuborildi: $(date -u '+%Y-%m-%d %H:%M') UTC"
+            git pull --rebase --autostash
             if ! git push; then
-              echo "::error::GitHub'ga yozib bo'lmadi. Settings -> Actions -> Workflow permissions -> 'Read and write permissions' ni yoqing."
+              echo "::error::GitHub'ga yozib bo'lmadi. Settings -> Actions -> Workflow permissions -> 'Read and write permissions'."
               exit 1
             fi
           fi
