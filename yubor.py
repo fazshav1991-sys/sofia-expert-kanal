@@ -79,6 +79,8 @@ def main():
     matn = post_fayl.read_text(encoding="utf-8").strip()
 
     topilgan = rasm.rasm_top(rasm_sozi(post_fayl.name))
+    if not topilgan:
+        log("RASM YO'Q: {}".format(rasm.oxirgi_sabab))
     if topilgan:
         matn += "\n📷 <i>Foto: {} / Pexels</i>".format(topilgan["muallif"])
 

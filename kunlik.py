@@ -21,6 +21,8 @@ def qolgan_qolda_postlar():
     yuborilgan = set()
     if YUBORILGAN.exists():
         yuborilgan = set(YUBORILGAN.read_text(encoding="utf-8").split())
+    if not POSTLAR.is_dir():
+        return []
     return [p for p in POSTLAR.glob("*.txt") if p.name not in yuborilgan]
 
 

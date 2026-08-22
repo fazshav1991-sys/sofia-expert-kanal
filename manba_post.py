@@ -161,6 +161,8 @@ def main():
         sys.exit(1)
 
     topilgan = rasm.rasm_top(manba.get("rasm_soz", "skincare beauty"))
+    if not topilgan:
+        log("RASM YO'Q: {}".format(rasm.oxirgi_sabab))
     if topilgan:
         post += "\n📷 <i>Foto: {} / Pexels</i>".format(topilgan["muallif"])
 
