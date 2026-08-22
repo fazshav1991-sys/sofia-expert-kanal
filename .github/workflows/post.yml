@@ -18,12 +18,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Kodni olish
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Python o'rnatish
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+
+      - name: Secretlarni tekshirish
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          KANAL: ${{ secrets.KANAL }}
+        run: |
+          xato=0
+          if [ -z "$BOT_TOKEN" ]; then
+            echo "::error::BOT_TOKEN secret topilmadi yoki bo'sh."
+            xato=1
+          else
+            echo "BOT_TOKEN: topildi (${#BOT_TOKEN} belgi)"
+          fi
+          if [ -z "$KANAL" ]; then
+            echo "::error::KANAL secret topilmadi yoki bo'sh."
+            xato=1
+          else
+            echo "KANAL: $KANAL"
+          fi
+          exit $xato
 
       - name: Postni yuborish
         env:
@@ -36,5 +56,12 @@ jobs:
           git config user.name  "Sofia Expert Bot"
           git config user.email "actions@github.com"
           git add yuborilgan.txt jurnal.log
-          git diff --staged --quiet || git commit -m "Post yuborildi: $(date -u '+%Y-%m-%d')"
-          git push
+          if git diff --staged --quiet; then
+            echo "O'zgarish yo'q, saqlash shart emas."
+          else
+            git commit -m "Post yuborildi: $(date -u '+%Y-%m-%d')"
+            if ! git push; then
+              echo "::error::GitHub'ga yozib bo'lmadi. Settings -> Actions -> Workflow permissions -> 'Read and write permissions' ni yoqing."
+              exit 1
+            fi
+          fi
