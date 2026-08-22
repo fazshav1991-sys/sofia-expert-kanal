@@ -46,6 +46,7 @@ jobs:
           KANAL: ${{ secrets.KANAL }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
         run: |
           echo "## 🔑 Secretlar" >> $GITHUB_STEP_SUMMARY
           echo "| Secret | Holat |" >> $GITHUB_STEP_SUMMARY
@@ -80,7 +81,13 @@ jobs:
           if [ -z "$PEXELS_API_KEY" ]; then
             echo "| PEXELS_API_KEY | ⚠️ yo'q (rasmsiz chiqadi) |" >> $GITHUB_STEP_SUMMARY
           else
-            echo "| PEXELS_API_KEY | ✅ ${#PEXELS_API_KEY} belgi |" >> $GITHUB_STEP_SUMMARY
+            echo "| PEXELS_API_KEY | ✅ ${#PEXELS_API_KEY} belgi (rasm krediti bilan) |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ -z "$PIXABAY_API_KEY" ]; then
+            echo "| PIXABAY_API_KEY | ⚠️ yo'q (Pexels ishlatiladi, kredit majburiy) |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| PIXABAY_API_KEY | ✅ ${#PIXABAY_API_KEY} belgi (kreditsiz) |" >> $GITHUB_STEP_SUMMARY
           fi
 
           if [ $xato -ne 0 ]; then
@@ -95,6 +102,7 @@ jobs:
           KANAL: ${{ secrets.KANAL }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
         run: |
           echo "## 📨 Post yuborish" >> $GITHUB_STEP_SUMMARY
           echo '```' >> $GITHUB_STEP_SUMMARY

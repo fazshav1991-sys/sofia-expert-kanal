@@ -6,6 +6,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+import imzo
+
 CAPTION_CHEGARA = 1024   # Telegram rasm izohi uchun belgi chegarasi
 
 
@@ -23,10 +25,13 @@ def _so_rov(token, metod, maydonlar):
 
 def yubor(token, kanal, matn, rasm_url=None):
     """
+    Matn oxiriga imzo avtomatik qo'shiladi.
     Rasm berilgan bo'lsa, rasm + izoh qilib yuboradi.
     Matn izoh chegarasidan uzun bo'lsa yoki rasm yuborilmasa, oddiy matn yuboradi.
     Qaytaradi: (muvaffaqiyatmi, izoh)
     """
+    matn = imzo.qosh(matn)
+
     if rasm_url and len(matn) <= CAPTION_CHEGARA:
         natija = _so_rov(token, "sendPhoto", {
             "chat_id": kanal,

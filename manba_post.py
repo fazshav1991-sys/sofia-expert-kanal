@@ -45,7 +45,8 @@ Kanal auditoriyasi — O'zbekistondagi oddiy odamlar, tibbiy ma'lumotga ega emas
 QOIDALAR:
 1. Faqat o'zbek tilida (lotin alifbosida) yoz. Rus yoki ingliz so'zlarini ishlatma.
 2. Manbadagi matnni so'zma-so'z tarjima QILMA — mazmunini o'zlashtirib, o'z so'zlaring bilan qaytadan yoz.
-3. Hajmi: 100-150 so'z. JAMI 800 BELGIDAN OSHMASIN — post rasm ostiga izoh bo'lib chiqadi.
+3. Hajmi: 90-130 so'z. JAMI 700 BELGIDAN OSHMASIN — post rasm ostiga izoh bo'lib chiqadi
+   va ostiga imzo qo'shiladi.
 4. Formatlash: <b>qalin</b> va <i>qiya</i> teglari. Boshqa HTML teg ISHLATMA.
    Ro'yxat uchun ▪️ yoki 1️⃣ 2️⃣ 3️⃣ ishlat.
 5. Sarlavha bilan boshla (emoji + <b>qalin matn</b>).
@@ -163,8 +164,8 @@ def main():
     topilgan = rasm.rasm_top(manba.get("rasm_soz", "skincare beauty"))
     if not topilgan:
         log("RASM YO'Q: {}".format(rasm.oxirgi_sabab))
-    if topilgan:
-        post += "\n📷 <i>Foto: {} / Pexels</i>".format(topilgan["muallif"])
+    if topilgan and topilgan.get("kredit"):
+        post += "\n" + topilgan["kredit"]
 
     ok, izoh = telegram.yubor(token, kanal, post,
                              rasm_url=topilgan["url"] if topilgan else None)
@@ -173,7 +174,7 @@ def main():
         sys.exit(1)
 
     if topilgan:
-        rasm.belgilangan(topilgan["id"])
+        rasm.belgilangan(topilgan["belgi"])
     with open(ISHLATILGAN_FAYL, "a", encoding="utf-8") as f:
         f.write(kalit + "\n")
 

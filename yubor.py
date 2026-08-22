@@ -81,8 +81,8 @@ def main():
     topilgan = rasm.rasm_top(rasm_sozi(post_fayl.name))
     if not topilgan:
         log("RASM YO'Q: {}".format(rasm.oxirgi_sabab))
-    if topilgan:
-        matn += "\n📷 <i>Foto: {} / Pexels</i>".format(topilgan["muallif"])
+    if topilgan and topilgan.get("kredit"):
+        matn += "\n" + topilgan["kredit"]
 
     ok, izoh = telegram.yubor(token, kanal, matn,
                              rasm_url=topilgan["url"] if topilgan else None)
@@ -91,7 +91,7 @@ def main():
         sys.exit(1)
 
     if topilgan:
-        rasm.belgilangan(topilgan["id"])
+        rasm.belgilangan(topilgan["belgi"])
     with open(YUBORILGAN_FAYL, "a", encoding="utf-8") as f:
         f.write(post_fayl.name + "\n")
 
