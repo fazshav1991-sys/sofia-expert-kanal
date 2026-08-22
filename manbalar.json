@@ -1,6 +1,5 @@
 {
-  "_izoh": "Ochiq mulk (public domain) manbalar: NIH/NIAMS va MedlinePlus davlat sahifalari. Matnlarini erkin tarjima va qayta ishlash mumkin. Rasmlar OLINMAYDI - ular himoyalangan. A.D.A.M. Encyclopedia (medlineplus.gov/ency/...) sahifalari MUALLIFLIK HUQUQI bilan himoyalangan, ro'yxatga qo'shmang.",
-
+  "_izoh": "Ochiq mulk (public domain) manbalar: NIH/NIAMS va MedlinePlus davlat sahifalari. Matnlarini erkin tarjima va qayta ishlash mumkin. Rasmlar OLINMAYDI - ular himoyalangan. A.D.A.M. Encyclopedia (medlineplus.gov/ency/...) sahifalari MUALLIFLIK HUQUQI bilan himoyalangan, ro'yxatga qo'shmang. Rasmlar Pexels API orqali olinadi (muallif ko'rsatiladi).",
   "burchaklar": [
     "Bu holat nima va nega paydo bo'ladi - sabablarini tushuntiring",
     "Belgilari qanday - o'quvchi o'zini tanib olishi uchun",
@@ -10,38 +9,156 @@
     "Qachon mutaxassisga murojaat qilish kerak - ogohlantiruvchi belgilar",
     "Shu mavzudagi keng tarqalgan noto'g'ri tushunchalar va haqiqat"
   ],
-
   "manbalar": [
-    {"mavzu": "Husnbuzar (akne)",          "url": "https://www.niams.nih.gov/health-topics/acne"},
-    {"mavzu": "Rozatsea",                  "url": "https://www.niams.nih.gov/health-topics/rosacea"},
-    {"mavzu": "Atopik dermatit (ekzema)",  "url": "https://www.niams.nih.gov/health-topics/atopic-dermatitis"},
-    {"mavzu": "Psoriaz",                   "url": "https://www.niams.nih.gov/health-topics/psoriasis"},
-    {"mavzu": "Vitiligo",                  "url": "https://www.niams.nih.gov/health-topics/vitiligo"},
-    {"mavzu": "Alopetsiya (soch to'kilishi)", "url": "https://www.niams.nih.gov/health-topics/alopecia-areata"},
-    {"mavzu": "Gidradenit",                "url": "https://www.niams.nih.gov/health-topics/hidradenitis-suppurativa-hs"},
-    {"mavzu": "Ixtioz (quruq teri)",       "url": "https://www.niams.nih.gov/health-topics/ichthyosis"},
-
-    {"mavzu": "Terining qarishi",          "url": "https://medlineplus.gov/skinaging.html"},
-    {"mavzu": "Quyosh ta'siri",            "url": "https://medlineplus.gov/sunexposure.html"},
-    {"mavzu": "Solyariy va tanlanish",     "url": "https://medlineplus.gov/tanning.html"},
-    {"mavzu": "Teri saratoni",             "url": "https://medlineplus.gov/skincancer.html"},
-    {"mavzu": "Melanoma",                  "url": "https://medlineplus.gov/melanoma.html"},
-    {"mavzu": "Xollar",                    "url": "https://medlineplus.gov/moles.html"},
-    {"mavzu": "Pigmentatsiya buzilishlari","url": "https://medlineplus.gov/skinpigmentationdisorders.html"},
-    {"mavzu": "Chandiqlar",                "url": "https://medlineplus.gov/scars.html"},
-    {"mavzu": "Teri holatlari (umumiy)",   "url": "https://medlineplus.gov/skinconditions.html"},
-    {"mavzu": "Qichishish",                "url": "https://medlineplus.gov/itching.html"},
-    {"mavzu": "Toshmalar",                 "url": "https://medlineplus.gov/rashes.html"},
-    {"mavzu": "Eshakyem (krapivnitsa)",    "url": "https://medlineplus.gov/hives.html"},
-    {"mavzu": "Soch to'kilishi",           "url": "https://medlineplus.gov/hairloss.html"},
-    {"mavzu": "Soch muammolari",           "url": "https://medlineplus.gov/hairproblems.html"},
-    {"mavzu": "Qazg'oq va bosh terisi",    "url": "https://medlineplus.gov/dandruffcradlecapandotherscalpconditions.html"},
-    {"mavzu": "Tirnoq kasalliklari",       "url": "https://medlineplus.gov/naildiseases.html"},
-    {"mavzu": "Zamburug'li infeksiyalar",  "url": "https://medlineplus.gov/tineainfections.html"},
-    {"mavzu": "So'gallar",                 "url": "https://medlineplus.gov/warts.html"},
-    {"mavzu": "Pirsing va tatuirovka",     "url": "https://medlineplus.gov/piercingandtattoos.html"},
-    {"mavzu": "Qadoq va suyaklar",         "url": "https://medlineplus.gov/cornsandcalluses.html"},
-    {"mavzu": "Ko'karishlar",              "url": "https://medlineplus.gov/bruises.html"},
-    {"mavzu": "Kuyishlar",                 "url": "https://medlineplus.gov/burns.html"}
+    {
+      "mavzu": "Husnbuzar (akne)",
+      "url": "https://www.niams.nih.gov/health-topics/acne",
+      "rasm_soz": "clean facial skin care routine"
+    },
+    {
+      "mavzu": "Rozatsea",
+      "url": "https://www.niams.nih.gov/health-topics/rosacea",
+      "rasm_soz": "gentle face skincare woman"
+    },
+    {
+      "mavzu": "Atopik dermatit (ekzema)",
+      "url": "https://www.niams.nih.gov/health-topics/atopic-dermatitis",
+      "rasm_soz": "moisturizer cream hands skin"
+    },
+    {
+      "mavzu": "Psoriaz",
+      "url": "https://www.niams.nih.gov/health-topics/psoriasis",
+      "rasm_soz": "body lotion skin care"
+    },
+    {
+      "mavzu": "Vitiligo",
+      "url": "https://www.niams.nih.gov/health-topics/vitiligo",
+      "rasm_soz": "natural skin beauty portrait"
+    },
+    {
+      "mavzu": "Alopetsiya (soch to'kilishi)",
+      "url": "https://www.niams.nih.gov/health-topics/alopecia-areata",
+      "rasm_soz": "healthy hair care woman"
+    },
+    {
+      "mavzu": "Gidradenit",
+      "url": "https://www.niams.nih.gov/health-topics/hidradenitis-suppurativa-hs",
+      "rasm_soz": "spa wellness skin treatment"
+    },
+    {
+      "mavzu": "Ixtioz (quruq teri)",
+      "url": "https://www.niams.nih.gov/health-topics/ichthyosis",
+      "rasm_soz": "dry skin moisturizing cream"
+    },
+    {
+      "mavzu": "Terining qarishi",
+      "url": "https://medlineplus.gov/skinaging.html",
+      "rasm_soz": "mature woman skincare beauty"
+    },
+    {
+      "mavzu": "Quyosh ta'siri",
+      "url": "https://medlineplus.gov/sunexposure.html",
+      "rasm_soz": "sunscreen sun protection skin"
+    },
+    {
+      "mavzu": "Solyariy va tanlanish",
+      "url": "https://medlineplus.gov/tanning.html",
+      "rasm_soz": "sunscreen beach sun protection"
+    },
+    {
+      "mavzu": "Teri saratoni",
+      "url": "https://medlineplus.gov/skincancer.html",
+      "rasm_soz": "dermatologist skin examination"
+    },
+    {
+      "mavzu": "Melanoma",
+      "url": "https://medlineplus.gov/melanoma.html",
+      "rasm_soz": "skin mole check dermatology"
+    },
+    {
+      "mavzu": "Xollar",
+      "url": "https://medlineplus.gov/moles.html",
+      "rasm_soz": "skin closeup beauty"
+    },
+    {
+      "mavzu": "Pigmentatsiya buzilishlari",
+      "url": "https://medlineplus.gov/skinpigmentationdisorders.html",
+      "rasm_soz": "even skin tone face beauty"
+    },
+    {
+      "mavzu": "Chandiqlar",
+      "url": "https://medlineplus.gov/scars.html",
+      "rasm_soz": "smooth skin face care"
+    },
+    {
+      "mavzu": "Teri holatlari (umumiy)",
+      "url": "https://medlineplus.gov/skinconditions.html",
+      "rasm_soz": "facial treatment cosmetology"
+    },
+    {
+      "mavzu": "Qichishish",
+      "url": "https://medlineplus.gov/itching.html",
+      "rasm_soz": "soothing cream skin care"
+    },
+    {
+      "mavzu": "Toshmalar",
+      "url": "https://medlineplus.gov/rashes.html",
+      "rasm_soz": "sensitive skin care cream"
+    },
+    {
+      "mavzu": "Eshakyem (krapivnitsa)",
+      "url": "https://medlineplus.gov/hives.html",
+      "rasm_soz": "calm skincare routine"
+    },
+    {
+      "mavzu": "Soch to'kilishi",
+      "url": "https://medlineplus.gov/hairloss.html",
+      "rasm_soz": "hair care treatment salon"
+    },
+    {
+      "mavzu": "Soch muammolari",
+      "url": "https://medlineplus.gov/hairproblems.html",
+      "rasm_soz": "shiny healthy hair"
+    },
+    {
+      "mavzu": "Qazg'oq va bosh terisi",
+      "url": "https://medlineplus.gov/dandruffcradlecapandotherscalpconditions.html",
+      "rasm_soz": "hair wash scalp care"
+    },
+    {
+      "mavzu": "Tirnoq kasalliklari",
+      "url": "https://medlineplus.gov/naildiseases.html",
+      "rasm_soz": "manicure nails care"
+    },
+    {
+      "mavzu": "Zamburug'li infeksiyalar",
+      "url": "https://medlineplus.gov/tineainfections.html",
+      "rasm_soz": "foot care spa"
+    },
+    {
+      "mavzu": "So'gallar",
+      "url": "https://medlineplus.gov/warts.html",
+      "rasm_soz": "hand skin care cream"
+    },
+    {
+      "mavzu": "Pirsing va tatuirovka",
+      "url": "https://medlineplus.gov/piercingandtattoos.html",
+      "rasm_soz": "tattoo aftercare skin"
+    },
+    {
+      "mavzu": "Qadoq va suyaklar",
+      "url": "https://medlineplus.gov/cornsandcalluses.html",
+      "rasm_soz": "foot care pedicure"
+    },
+    {
+      "mavzu": "Ko'karishlar",
+      "url": "https://medlineplus.gov/bruises.html",
+      "rasm_soz": "skin care leg treatment"
+    },
+    {
+      "mavzu": "Kuyishlar",
+      "url": "https://medlineplus.gov/burns.html",
+      "rasm_soz": "aloe vera skin care"
+    }
   ]
 }

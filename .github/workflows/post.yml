@@ -3,8 +3,8 @@ name: Kanalga post yuborish
 on:
   schedule:
     # UTC vaqti. Toshkent = UTC + 5 soat.
-    # 05:00->10:00  08:00->13:00  11:00->16:00  14:00->19:00  16:00->21:00
-    - cron: '0 5,8,11,14,16 * * *'
+    # 04:00->09:00  07:00->12:00  10:00->15:00  13:00->18:00  16:00->21:00
+    - cron: '0 4,7,10,13,16 * * *'
   workflow_dispatch:
 
 permissions:
@@ -35,6 +35,7 @@ jobs:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           KANAL: ${{ secrets.KANAL }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: |
           xato=0
           if [ -z "$BOT_TOKEN" ]; then
@@ -52,6 +53,11 @@ jobs:
           else
             echo "ANTHROPIC_API_KEY: topildi (${#ANTHROPIC_API_KEY} belgi)"
           fi
+          if [ -z "$PEXELS_API_KEY" ]; then
+            echo "::warning::PEXELS_API_KEY yo'q. Postlar RASMSIZ yuboriladi."
+          else
+            echo "PEXELS_API_KEY: topildi (${#PEXELS_API_KEY} belgi)"
+          fi
           exit $xato
 
       - name: Postni yuborish
@@ -59,6 +65,7 @@ jobs:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           KANAL: ${{ secrets.KANAL }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
         run: python kunlik.py
 
       - name: Holatni saqlash
@@ -66,7 +73,7 @@ jobs:
         run: |
           git config user.name  "Sofia Expert Bot"
           git config user.email "actions@github.com"
-          git add -A yuborilgan.txt ishlatilgan.txt jurnal.log 2>/dev/null || true
+          git add -A yuborilgan.txt ishlatilgan.txt ishlatilgan_rasmlar.txt jurnal.log 2>/dev/null || true
           if git diff --staged --quiet; then
             echo "O'zgarish yo'q."
           else

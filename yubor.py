@@ -1,31 +1,30 @@
 # -*- coding: utf-8 -*-
 """
-SOFIA EXPERT — Telegram kanalga avtomatik post yuboruvchi dastur.
+Qo'lda yozilgan navbatdagi postni mos rasm bilan Telegram kanalga yuboradi.
 
-Ishlash tartibi:
   1. "postlar" papkasidagi eng kichik raqamli, hali yuborilmagan .txt faylni topadi
-  2. Uni Telegram kanalga yuboradi
-  3. Fayl nomini "yuborilgan.txt" ga yozadi (qayta yubormaslik uchun)
+  2. post_rasmlari.json dan mos rasm kalit so'zini oladi va Pexels'dan rasm topadi
+  3. Kanalga yuboradi
+  4. Fayl nomini "yuborilgan.txt" ga yozadi
 
-Token qayerdan olinadi:
-  - GitHub Actions'da  -> BOT_TOKEN / KANAL muhit o'zgaruvchilaridan (Secrets)
-  - Kompyuterda        -> sozlamalar.json faylidan
+Token: GitHub Secrets (BOT_TOKEN / KANAL) yoki kompyuterda sozlamalar.json
 """
 
 import json
 import os
 import sys
-import urllib.error
-import urllib.parse
-import urllib.request
 from datetime import datetime
 from pathlib import Path
+
+import rasm
+import telegram
 
 PAPKA = Path(__file__).parent
 POSTLAR = PAPKA / "postlar"
 YUBORILGAN_FAYL = PAPKA / "yuborilgan.txt"
 LOG_FAYL = PAPKA / "jurnal.log"
 SOZLAMALAR_FAYL = PAPKA / "sozlamalar.json"
+RASM_KALITLARI = PAPKA / "post_rasmlari.json"
 
 
 def log(xabar):
@@ -51,8 +50,16 @@ def sozlamalarni_ol():
     if not kanal:
         log("XATO: kanal nomi topilmadi (KANAL secret yoki sozlamalar.json).")
         sys.exit(1)
-
     return token, kanal
+
+
+def rasm_sozi(fayl_nomi):
+    """Fayl nomining raqamiga qarab rasm kalit so'zini qaytaradi."""
+    if not RASM_KALITLARI.exists():
+        return "skincare beauty cosmetology"
+    kalitlar = json.loads(RASM_KALITLARI.read_text(encoding="utf-8"))
+    raqam = fayl_nomi.split("-")[0]
+    return kalitlar.get(raqam, "skincare beauty cosmetology")
 
 
 def main():
@@ -64,39 +71,29 @@ def main():
 
     navbat = sorted(p for p in POSTLAR.glob("*.txt") if p.name not in yuborilganlar)
     if not navbat:
-        log("Navbatda post qolmadi. 'postlar' papkasiga yangilarini qo'shing.")
+        log("Navbatda qo'lda yozilgan post qolmadi.")
         return
 
     post_fayl = navbat[0]
     matn = post_fayl.read_text(encoding="utf-8").strip()
 
-    url = "https://api.telegram.org/bot{}/sendMessage".format(token)
-    data = urllib.parse.urlencode({
-        "chat_id": kanal,
-        "text": matn,
-        "parse_mode": "HTML",
-    }).encode("utf-8")
+    topilgan = rasm.rasm_top(rasm_sozi(post_fayl.name))
+    if topilgan:
+        matn += "\n📷 <i>Foto: {} / Pexels</i>".format(topilgan["muallif"])
 
-    try:
-        with urllib.request.urlopen(urllib.request.Request(url, data=data), timeout=30) as javob:
-            natija = json.load(javob)
-    except urllib.error.HTTPError as e:
-        # Tokenni jurnal va GitHub loglariga tushirmaymiz
-        log("XATO: Telegram rad etdi ({}): {}".format(
-            e.code, e.read().decode("utf-8", errors="replace")))
-        sys.exit(1)
-    except urllib.error.URLError as e:
-        log("XATO: internetga ulanib bo'lmadi: {}".format(e.reason))
+    ok, izoh = telegram.yubor(token, kanal, matn,
+                             rasm_url=topilgan["url"] if topilgan else None)
+    if not ok:
+        log("XATO: Telegram rad etdi: {}".format(izoh))
         sys.exit(1)
 
-    if natija.get("ok"):
-        with open(YUBORILGAN_FAYL, "a", encoding="utf-8") as f:
-            f.write(post_fayl.name + "\n")
-        log("YUBORILDI: {} -> {} (navbatda yana {} ta)".format(
-            post_fayl.name, kanal, len(navbat) - 1))
-    else:
-        log("XATO: {}".format(natija))
-        sys.exit(1)
+    if topilgan:
+        rasm.belgilangan(topilgan["id"])
+    with open(YUBORILGAN_FAYL, "a", encoding="utf-8") as f:
+        f.write(post_fayl.name + "\n")
+
+    log("YUBORILDI: {} [{}] | navbatda yana {} ta".format(
+        post_fayl.name, izoh, len(navbat) - 1))
 
 
 if __name__ == "__main__":

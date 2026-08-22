@@ -26,10 +26,16 @@ def ishga_tushir(skript):
     return subprocess.run([sys.executable, str(PAPKA / skript)]).returncode
 
 
-qolgan = qolgan_qolda_postlar()
-if qolgan:
-    print("Rejim: qo'lda yozilgan post (navbatda {} ta)".format(len(qolgan)))
-    sys.exit(ishga_tushir("yubor.py"))
-else:
+def main():
+    qolgan = qolgan_qolda_postlar()
+    if qolgan:
+        print("Rejim: qo'lda yozilgan post (navbatda {} ta)".format(len(qolgan)))
+        return ishga_tushir("yubor.py")
     print("Rejim: manbadan AI post")
-    sys.exit(ishga_tushir("manba_post.py"))
+    return ishga_tushir("manba_post.py")
+
+
+# Himoya: fayl import qilinganda ishga tushmasin, faqat to'g'ridan-to'g'ri
+# chaqirilganda ishlasin.
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Ochiq manbadan post tayyorlab, Telegram kanalga yuboradi.
+Ochiq manbadan post tayyorlab, mos rasm bilan Telegram kanalga yuboradi.
 
 Ish tartibi:
   1. manbalar.json dan hali ishlatilmagan (manba + burchak) juftini oladi
-  2. Manba sahifasi matnini yuklaydi (faqat matn, rasm olinmaydi)
+  2. Manba sahifasi matnini yuklaydi (faqat matn)
   3. Claude API orqali o'zbek tilida post yozdiradi
-  4. Kanalga yuboradi va juftni "ishlatilgan" deb belgilaydi
+  4. Mavzuga mos rasm topadi (Pexels)
+  5. Kanalga yuboradi va juftni "ishlatilgan" deb belgilaydi
 
-Manbalar: NIH/NIAMS va MedlinePlus davlat sahifalari — ochiq mulk (public domain).
+Manbalar: NIH/NIAMS va MedlinePlus — ochiq mulk (public domain).
+Rasmlar: Pexels — muallif nomi postda ko'rsatiladi.
 
-Muhit o'zgaruvchilari (GitHub Secrets):
-  ANTHROPIC_API_KEY, BOT_TOKEN, KANAL
+GitHub Secrets: ANTHROPIC_API_KEY, BOT_TOKEN, KANAL, PEXELS_API_KEY
 """
 
 import html
@@ -20,12 +21,14 @@ import os
 import re
 import sys
 import urllib.error
-import urllib.parse
 import urllib.request
 from datetime import datetime
 from pathlib import Path
 
 import anthropic
+
+import rasm
+import telegram
 
 PAPKA = Path(__file__).parent
 MANBALAR_FAYL = PAPKA / "manbalar.json"
@@ -33,7 +36,7 @@ ISHLATILGAN_FAYL = PAPKA / "ishlatilgan.txt"
 LOG_FAYL = PAPKA / "jurnal.log"
 
 MODEL = "claude-opus-5"
-MAX_MANBA_BELGI = 12000     # manbadan olinadigan matn hajmi
+MAX_MANBA_BELGI = 12000
 
 YONALISH = """Sen professional kosmetolog Sofia Mulladjanovaning Telegram kanali uchun post yozasan.
 Kanal auditoriyasi — O'zbekistondagi oddiy odamlar, tibbiy ma'lumotga ega emas.
@@ -41,20 +44,19 @@ Kanal auditoriyasi — O'zbekistondagi oddiy odamlar, tibbiy ma'lumotga ega emas
 QOIDALAR:
 1. Faqat o'zbek tilida (lotin alifbosida) yoz. Rus yoki ingliz so'zlarini ishlatma.
 2. Manbadagi matnni so'zma-so'z tarjima QILMA — mazmunini o'zlashtirib, o'z so'zlaring bilan qaytadan yoz.
-3. Hajmi: 120–200 so'z. Telegram posti — qisqa va o'qishga oson bo'lsin.
-4. Formatlash: <b>qalin</b> va <i>qiya</i> teglari ishlatiladi. Boshqa HTML teg ISHLATMA.
-   Ro'yxatlar uchun ▪️ yoki raqamli emoji (1️⃣ 2️⃣) ishlat.
+3. Hajmi: 100-150 so'z. JAMI 800 BELGIDAN OSHMASIN — post rasm ostiga izoh bo'lib chiqadi.
+4. Formatlash: <b>qalin</b> va <i>qiya</i> teglari. Boshqa HTML teg ISHLATMA.
+   Ro'yxat uchun ▪️ yoki 1️⃣ 2️⃣ 3️⃣ ishlat.
 5. Sarlavha bilan boshla (emoji + <b>qalin matn</b>).
 6. Manbada YO'Q ma'lumotni O'ZINGDAN QO'SHMA. Dori nomlari, dozalar, aniq raqamlar —
    faqat manbada bo'lsa yoz.
-7. Hech qachon tashxis qo'yma va davolash tayinlama. Jiddiy holatlar uchun
+7. Hech qachon tashxis qo'yma va davolash tayinlama. Jiddiy holatlarda
    "mutaxassisga murojaat qiling" deb yoz.
-8. Postni shu ikki qator bilan tugat (aynan shu ko'rinishda):
+8. Postni aynan shu qator bilan tugat:
 
-💬 Savolingiz bormi? Yozing!
 <i>Manba: {manba_nomi}</i>
 
-Javobingda faqat postning o'zini ber — izoh, muqaddima yoki "mana post" degan gap yozma."""
+Javobingda faqat postning o'zini ber — izoh yoki muqaddima yozma."""
 
 
 def log(xabar):
@@ -69,7 +71,6 @@ def matn_ajratib_ol(url):
     with urllib.request.urlopen(so_rov, timeout=45) as javob:
         xom = javob.read().decode("utf-8", errors="replace")
 
-    # script/style/nav bloklarini olib tashlaymiz
     for teg in ("script", "style", "nav", "header", "footer", "form"):
         xom = re.sub(r"<{0}\b.*?</{0}>".format(teg), " ", xom, flags=re.S | re.I)
     matn = re.sub(r"<[^>]+>", " ", xom)
@@ -85,17 +86,17 @@ def navbatdagi_juft():
     if ISHLATILGAN_FAYL.exists():
         ishlatilgan = set(ISHLATILGAN_FAYL.read_text(encoding="utf-8").splitlines())
 
-    # Burchaklar bo'ylab aylanamiz: avval hamma mavzuga 1-burchak, keyin 2-burchak...
+    jami = len(cfg["manbalar"]) * len(cfg["burchaklar"])
     for b_raqam, burchak in enumerate(cfg["burchaklar"]):
         for manba in cfg["manbalar"]:
             kalit = "{}|{}".format(manba["url"], b_raqam)
             if kalit not in ishlatilgan:
-                return kalit, manba, burchak, len(ishlatilgan), len(cfg["manbalar"]) * len(cfg["burchaklar"])
-    return None, None, None, len(ishlatilgan), len(ishlatilgan)
+                return kalit, manba, burchak, len(ishlatilgan), jami
+    return None, None, None, len(ishlatilgan), jami
 
 
 def post_yozdir(mavzu, burchak, manba_matni, manba_nomi):
-    mijoz = anthropic.Anthropic()   # ANTHROPIC_API_KEY muhitdan olinadi
+    mijoz = anthropic.Anthropic()
     javob = mijoz.messages.create(
         model=MODEL,
         max_tokens=8000,
@@ -115,21 +116,6 @@ def post_yozdir(mavzu, burchak, manba_matni, manba_nomi):
     return "".join(b.text for b in javob.content if b.type == "text").strip()
 
 
-def telegramga_yubor(matn, token, kanal):
-    url = "https://api.telegram.org/bot{}/sendMessage".format(token)
-    data = urllib.parse.urlencode({
-        "chat_id": kanal,
-        "text": matn,
-        "parse_mode": "HTML",
-        "disable_web_page_preview": "true",
-    }).encode("utf-8")
-    try:
-        with urllib.request.urlopen(urllib.request.Request(url, data=data), timeout=30) as j:
-            return json.load(j)
-    except urllib.error.HTTPError as e:
-        return {"ok": False, "description": e.read().decode("utf-8", errors="replace")}
-
-
 def main():
     token = os.environ.get("BOT_TOKEN", "").strip()
     kanal = os.environ.get("KANAL", "").strip()
@@ -142,10 +128,10 @@ def main():
 
     kalit, manba, burchak, tugagan, jami = navbatdagi_juft()
     if kalit is None:
-        log("Barcha mavzular ishlatilgan ({} ta). manbalar.json ga yangi manba yoki burchak qo'shing.".format(jami))
+        log("Barcha {} mavzu ishlatilgan. manbalar.json ga yangi manba qo'shing.".format(jami))
         return
 
-    log("Tayyorlanmoqda: {} | {}".format(manba["mavzu"], burchak[:40]))
+    log("Tayyorlanmoqda: {} | {}".format(manba["mavzu"], burchak[:45]))
 
     try:
         manba_matni = matn_ajratib_ol(manba["url"])
@@ -154,7 +140,7 @@ def main():
         sys.exit(1)
 
     if len(manba_matni) < 500:
-        log("XATO: manba matni juda qisqa, sahifa o'zgargan bo'lishi mumkin: {}".format(manba["url"]))
+        log("XATO: manba matni juda qisqa, sahifa o'zgargan: {}".format(manba["url"]))
         sys.exit(1)
 
     manba_nomi = "NIH / NIAMS" if "niams.nih.gov" in manba["url"] else "MedlinePlus (NIH)"
@@ -172,15 +158,23 @@ def main():
         log("XATO: bo'sh post qaytdi.")
         sys.exit(1)
 
-    natija = telegramga_yubor(post, token, kanal)
-    if not natija.get("ok"):
-        log("XATO: Telegram rad etdi: {}".format(natija.get("description")))
+    topilgan = rasm.rasm_top(manba.get("rasm_soz", "skincare beauty"))
+    if topilgan:
+        post += "\n📷 <i>Foto: {} / Pexels</i>".format(topilgan["muallif"])
+
+    ok, izoh = telegram.yubor(token, kanal, post,
+                             rasm_url=topilgan["url"] if topilgan else None)
+    if not ok:
+        log("XATO: Telegram rad etdi: {}".format(izoh))
         sys.exit(1)
 
+    if topilgan:
+        rasm.belgilangan(topilgan["id"])
     with open(ISHLATILGAN_FAYL, "a", encoding="utf-8") as f:
         f.write(kalit + "\n")
 
-    log("YUBORILDI: {} | qolgan mavzular: {}".format(manba["mavzu"], jami - tugagan - 1))
+    log("YUBORILDI: {} [{}] | qolgan mavzu: {}".format(
+        manba["mavzu"], izoh, jami - tugagan - 1))
 
 
 if __name__ == "__main__":
