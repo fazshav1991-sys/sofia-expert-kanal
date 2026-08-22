@@ -10,6 +10,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import konfig
+
 PAPKA = Path(__file__).parent
 POSTLAR = PAPKA / "postlar"
 YUBORILGAN = PAPKA / "yuborilgan.txt"
@@ -27,6 +29,8 @@ def ishga_tushir(skript):
 
 
 def main():
+    konfig.muhitni_tozala("BOT_TOKEN", "KANAL",
+                          "ANTHROPIC_API_KEY", "PEXELS_API_KEY")
     qolgan = qolgan_qolda_postlar()
     if qolgan:
         print("Rejim: qo'lda yozilgan post (navbatda {} ta)".format(len(qolgan)))

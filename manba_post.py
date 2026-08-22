@@ -27,6 +27,7 @@ from pathlib import Path
 
 import anthropic
 
+import konfig
 import rasm
 import telegram
 
@@ -117,12 +118,13 @@ def post_yozdir(mavzu, burchak, manba_matni, manba_nomi):
 
 
 def main():
-    token = os.environ.get("BOT_TOKEN", "").strip()
-    kanal = os.environ.get("KANAL", "").strip()
+    konfig.muhitni_tozala("ANTHROPIC_API_KEY", "PEXELS_API_KEY")
+    token = konfig.ol("BOT_TOKEN")
+    kanal = konfig.ol("KANAL")
     if not token or not kanal:
         log("XATO: BOT_TOKEN yoki KANAL topilmadi.")
         sys.exit(1)
-    if not os.environ.get("ANTHROPIC_API_KEY", "").strip():
+    if not konfig.ol("ANTHROPIC_API_KEY"):
         log("XATO: ANTHROPIC_API_KEY topilmadi.")
         sys.exit(1)
 

@@ -17,6 +17,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+import konfig
+
 PAPKA = Path(__file__).parent
 ISHLATILGAN_RASMLAR = PAPKA / "ishlatilgan_rasmlar.txt"
 
@@ -37,7 +39,7 @@ def rasm_top(qidiruv):
     Berilgan kalit so'z bo'yicha hali ishlatilmagan rasm qaytaradi.
     Qaytaradi: {"url":..., "muallif":..., "id":...} yoki None
     """
-    kalit = os.environ.get("PEXELS_API_KEY", "").strip()
+    kalit = konfig.ol("PEXELS_API_KEY")
     if not kalit:
         return None
 

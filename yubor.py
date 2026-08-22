@@ -16,6 +16,7 @@ import sys
 from datetime import datetime
 from pathlib import Path
 
+import konfig
 import rasm
 import telegram
 
@@ -35,14 +36,14 @@ def log(xabar):
 
 def sozlamalarni_ol():
     """Avval muhit o'zgaruvchilari (GitHub Secrets), keyin sozlamalar.json."""
-    token = os.environ.get("BOT_TOKEN", "").strip()
-    kanal = os.environ.get("KANAL", "").strip()
+    token = konfig.ol("BOT_TOKEN")
+    kanal = konfig.ol("KANAL")
 
     if not (token and kanal) and SOZLAMALAR_FAYL.exists():
         with open(SOZLAMALAR_FAYL, encoding="utf-8") as f:
             s = json.load(f)
-        token = token or s.get("bot_token", "").strip()
-        kanal = kanal or s.get("kanal", "").strip()
+        token = token or konfig.tozala(s.get("bot_token", ""))
+        kanal = kanal or konfig.tozala(s.get("kanal", ""))
 
     if not token or "BU_YERGA" in token:
         log("XATO: bot token topilmadi (BOT_TOKEN secret yoki sozlamalar.json).")

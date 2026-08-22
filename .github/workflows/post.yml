@@ -56,7 +56,12 @@ jobs:
             echo "| BOT_TOKEN | ❌ **TOPILMADI yoki bo'sh** |" >> $GITHUB_STEP_SUMMARY
             xato=1
           else
-            echo "| BOT_TOKEN | ✅ ${#BOT_TOKEN} belgi (46 bo'lishi kerak) |" >> $GITHUB_STEP_SUMMARY
+            toza=$(printf '%s' "$BOT_TOKEN" | tr -d '[:space:]')
+            if [ ${#BOT_TOKEN} -ne ${#toza} ]; then
+              echo "| BOT_TOKEN | ⚠️ ${#BOT_TOKEN} belgi, ichida $(( ${#BOT_TOKEN} - ${#toza} )) ta ko'rinmas belgi bor (kod avtomatik tozalaydi) |" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "| BOT_TOKEN | ✅ ${#BOT_TOKEN} belgi (46 bo'lishi kerak) |" >> $GITHUB_STEP_SUMMARY
+            fi
           fi
 
           if [ -z "$KANAL" ]; then
