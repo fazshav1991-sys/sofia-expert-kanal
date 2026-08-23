@@ -1,2 +1,3 @@
 https://www.niams.nih.gov/health-topics/acne|0
 https://www.niams.nih.gov/health-topics/rosacea|0
+https://medlineplus.gov/melanoma.html|5
