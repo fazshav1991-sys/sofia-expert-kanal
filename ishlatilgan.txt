@@ -6,3 +6,4 @@ https://medlineplus.gov/moles.html|4
 https://medlineplus.gov/skinaging.html|0
 https://medlineplus.gov/skincancer.html|0
 https://medlineplus.gov/warts.html|5
+https://medlineplus.gov/scars.html|3
