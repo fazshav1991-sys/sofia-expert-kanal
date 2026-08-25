@@ -13,3 +13,4 @@ https://medlineplus.gov/moles.html|6
 https://medlineplus.gov/burns.html|6
 https://medlineplus.gov/moles.html|1
 https://medlineplus.gov/skinaging.html|1
+https://medlineplus.gov/tineainfections.html|6
