@@ -10,3 +10,4 @@ https://medlineplus.gov/scars.html|3
 https://medlineplus.gov/skincancer.html|2
 https://medlineplus.gov/tineainfections.html|3
 https://medlineplus.gov/moles.html|6
+https://medlineplus.gov/burns.html|6
