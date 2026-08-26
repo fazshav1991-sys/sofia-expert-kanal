@@ -81,11 +81,10 @@ def main():
     topilgan = rasm.rasm_top(rasm_sozi(post_fayl.name))
     if not topilgan:
         log("RASM YO'Q: {}".format(rasm.oxirgi_sabab))
-    if topilgan and topilgan.get("kredit"):
-        matn += "\n" + topilgan["kredit"]
 
     ok, izoh = telegram.yubor(token, kanal, matn,
-                             rasm_url=topilgan["url"] if topilgan else None)
+                             rasm_url=topilgan["url"] if topilgan else None,
+                             kredit=topilgan.get("kredit") if topilgan else None)
     if not ok:
         log("XATO: Telegram rad etdi: {}".format(izoh))
         sys.exit(1)

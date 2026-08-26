@@ -23,14 +23,15 @@ def _so_rov(token, metod, maydonlar):
         return {"ok": False, "description": "ulanish xatosi: {}".format(e.reason)}
 
 
-def yubor(token, kanal, matn, rasm_url=None):
+def yubor(token, kanal, matn, rasm_url=None, kredit=None):
     """
-    Matn oxiriga imzo avtomatik qo'shiladi.
+    Matn oxiriga imzo, undan keyin (bo'lsa) rasm krediti qo'shiladi.
     Rasm berilgan bo'lsa, rasm + izoh qilib yuboradi.
-    Matn izoh chegarasidan uzun bo'lsa yoki rasm yuborilmasa, oddiy matn yuboradi.
+    Izoh chegarasidan uzun bo'lsa yoki rasm bo'lmasa, oddiy matn yuboradi.
+
     Qaytaradi: (muvaffaqiyatmi, izoh)
     """
-    matn = imzo.qosh(matn)
+    matn = imzo.qosh(matn, kredit)
 
     if rasm_url and len(matn) <= CAPTION_CHEGARA:
         natija = _so_rov(token, "sendPhoto", {
@@ -41,7 +42,7 @@ def yubor(token, kanal, matn, rasm_url=None):
         })
         if natija.get("ok"):
             return True, "rasm bilan"
-        # Rasm yuborilmadi (masalan, URL ochilmadi) - matn bilan davom etamiz
+        # Rasm yuborilmadi (masalan, URL ochilmadi) — matn bilan davom etamiz
         sabab = natija.get("description", "")
     else:
         sabab = "matn uzun ({} belgi)".format(len(matn)) if rasm_url else "rasm yo'q"
