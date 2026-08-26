@@ -16,3 +16,4 @@ https://medlineplus.gov/skinaging.html|1
 https://medlineplus.gov/tineainfections.html|6
 https://medlineplus.gov/skinconditions.html|2
 https://www.niams.nih.gov/health-topics/ichthyosis|0
+https://www.niams.nih.gov/health-topics/acne|5
