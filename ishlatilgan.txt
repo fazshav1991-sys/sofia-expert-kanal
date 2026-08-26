@@ -19,3 +19,4 @@ https://www.niams.nih.gov/health-topics/ichthyosis|0
 https://www.niams.nih.gov/health-topics/acne|5
 https://medlineplus.gov/bruises.html|1
 https://medlineplus.gov/hives.html|2
+https://medlineplus.gov/bruises.html|5
