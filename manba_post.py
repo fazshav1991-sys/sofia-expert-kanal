@@ -53,11 +53,13 @@ Har bir post UCH TILDA yoziladi. Javobingni AYNAN shu ko'rinishda ber:
 [EN]
 (inglizcha qisqa versiya)
 
-HAJM (juda muhim, Telegram cheklovi bor):
-- [UZ] — 300-380 belgi
-- [RU] — 200-240 belgi
-- [EN] — 170-210 belgi
-Rus va inglizcha versiyalar to'liq tarjima emas, MOHIYATINI beruvchi qisqa versiya.
+HAJM:
+- [UZ] — 300-400 belgi. Bu kanalda ochiq ko'rinadi, shuning uchun qisqa bo'lishi shart.
+- [RU] va [EN] — 500-800 belgi. Bular alohida sahifada chiqadi, cheklov yo'q,
+  shuning uchun TO'LIQROQ va batafsilroq yozilsin: mavzuni to'liq ochib ber.
+
+[RU] va [EN] — o'zbekchaning so'zma-so'z tarjimasi emas, o'sha manbaga
+tayangan mustaqil, to'liqroq matn.
 
 QOIDALAR:
 1. [UZ] bo'limi sarlavha bilan boshlanadi: emoji + <b>qalin matn</b>.
@@ -193,8 +195,8 @@ def main():
         log("XATO: {}".format(e))
         sys.exit(1)
 
-    post = post_tuzuvchi.yig(bolimlar, manba_nomi)
-    log("Tillar: {}".format(", ".join(sorted(bolimlar))))
+    post, usul = post_tuzuvchi.yig(bolimlar, manba_nomi, manba["mavzu"])
+    log("Tillar: {} | Tarjima usuli: {}".format(", ".join(sorted(bolimlar)), usul))
 
     topilgan = rasm.rasm_top(manba.get("rasm_soz", "skincare beauty"))
     if not topilgan:
