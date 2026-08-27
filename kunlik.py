@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Kunlik dispetcher.
+Kunlik dispetcher. Navbat bilan uch manbani sinab ko'radi:
 
-Avval "postlar" papkasidagi qo'lda yozilgan postlarni yuboradi.
-Ular tugagach, avtomatik ravishda manbalardan AI post tayyorlashga o'tadi.
+  1. postlar/    - qo'lda yozilgan postlar (bo'lsa, ular birinchi chiqadi)
+  2. kanallar    - ochiq Telegram kanallardagi yangi kosmetologiya postlari
+  3. manbalar    - NIH/NIAMS va MedlinePlus (har doim zaxirada bor)
+
+Kanalda yangi mos post bo'lmasa (yoki hammasi reklama bo'lsa), avtomatik
+ravishda NIH manbalariga o'tadi - shu tufayli kuniga 5 ta post uzilmaydi.
 """
 
 import subprocess
@@ -18,11 +22,11 @@ YUBORILGAN = PAPKA / "yuborilgan.txt"
 
 
 def qolgan_qolda_postlar():
+    if not POSTLAR.is_dir():
+        return []
     yuborilgan = set()
     if YUBORILGAN.exists():
         yuborilgan = set(YUBORILGAN.read_text(encoding="utf-8").split())
-    if not POSTLAR.is_dir():
-        return []
     return [p for p in POSTLAR.glob("*.txt") if p.name not in yuborilgan]
 
 
@@ -31,17 +35,23 @@ def ishga_tushir(skript):
 
 
 def main():
-    konfig.muhitni_tozala("BOT_TOKEN", "KANAL",
-                          "ANTHROPIC_API_KEY", "PEXELS_API_KEY")
+    konfig.muhitni_tozala("BOT_TOKEN", "KANAL", "ANTHROPIC_API_KEY",
+                          "PEXELS_API_KEY", "PIXABAY_API_KEY", "TELEGRAPH_TOKEN")
+
     qolgan = qolgan_qolda_postlar()
     if qolgan:
         print("Rejim: qo'lda yozilgan post (navbatda {} ta)".format(len(qolgan)))
         return ishga_tushir("yubor.py")
+
+    if (PAPKA / "kanallar.json").exists():
+        print("Rejim: kanallardan post qidirilmoqda")
+        if ishga_tushir("kanal_post.py") == 0:
+            return 0
+        print("Kanalda mos post yo'q - manbalarga o'tilmoqda")
+
     print("Rejim: manbadan AI post")
     return ishga_tushir("manba_post.py")
 
 
-# Himoya: fayl import qilinganda ishga tushmasin, faqat to'g'ridan-to'g'ri
-# chaqirilganda ishlasin.
 if __name__ == "__main__":
     sys.exit(main())
