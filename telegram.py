@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """Telegram kanalga post yuborish (rasm bilan yoki rasmsiz)."""
 
+import html
 import json
+import re
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -9,6 +11,17 @@ import urllib.request
 import imzo
 
 CAPTION_CHEGARA = 1024   # Telegram rasm izohi uchun belgi chegarasi
+MATN_CHEGARA = 4096      # Oddiy xabar chegarasi
+
+_TEG = re.compile(r"<[^>]+>")
+
+
+def korinadigan_uzunlik(matn):
+    """
+    Telegram chegarani KO'RINADIGAN belgilar bo'yicha hisoblaydi.
+    HTML teglar (<b>, <a href=...>, <tg-spoiler>) hisobga olinmaydi.
+    """
+    return len(html.unescape(_TEG.sub("", matn)))
 
 
 def _so_rov(token, metod, maydonlar):
@@ -26,14 +39,15 @@ def _so_rov(token, metod, maydonlar):
 def yubor(token, kanal, matn, rasm_url=None, kredit=None):
     """
     Matn oxiriga imzo, undan keyin (bo'lsa) rasm krediti qo'shiladi.
-    Rasm berilgan bo'lsa, rasm + izoh qilib yuboradi.
-    Izoh chegarasidan uzun bo'lsa yoki rasm bo'lmasa, oddiy matn yuboradi.
+    Rasm berilgan va izoh chegarasiga sig'sa — rasm + izoh.
+    Aks holda oddiy matn xabari.
 
     Qaytaradi: (muvaffaqiyatmi, izoh)
     """
     matn = imzo.qosh(matn, kredit)
+    uzunlik = korinadigan_uzunlik(matn)
 
-    if rasm_url and len(matn) <= CAPTION_CHEGARA:
+    if rasm_url and uzunlik <= CAPTION_CHEGARA:
         natija = _so_rov(token, "sendPhoto", {
             "chat_id": kanal,
             "photo": rasm_url,
@@ -41,11 +55,12 @@ def yubor(token, kanal, matn, rasm_url=None, kredit=None):
             "parse_mode": "HTML",
         })
         if natija.get("ok"):
-            return True, "rasm bilan"
+            return True, "rasm bilan, {} belgi".format(uzunlik)
         # Rasm yuborilmadi (masalan, URL ochilmadi) — matn bilan davom etamiz
-        sabab = natija.get("description", "")
+        sabab = natija.get("description", "")[:80]
     else:
-        sabab = "matn uzun ({} belgi)".format(len(matn)) if rasm_url else "rasm yo'q"
+        sabab = ("matn uzun: {} > {}".format(uzunlik, CAPTION_CHEGARA)
+                 if rasm_url else "rasm yo'q")
 
     natija = _so_rov(token, "sendMessage", {
         "chat_id": kanal,

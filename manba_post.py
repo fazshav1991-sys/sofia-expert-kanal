@@ -29,6 +29,7 @@ from pathlib import Path
 import anthropic
 
 import konfig
+import post_tuzuvchi
 import rasm
 import telegram
 
@@ -40,26 +41,37 @@ LOG_FAYL = PAPKA / "jurnal.log"
 MODEL = "claude-opus-5"
 MAX_MANBA_BELGI = 12000
 
-YONALISH = """Sen professional kosmetolog Sofia Mulladjanovaning Telegram kanali uchun post yozasan.
+YONALISH = """Sen professional mutaxassis Sofia Mulladjanovaning Telegram kanali uchun post yozasan.
 Kanal auditoriyasi — O'zbekistondagi oddiy odamlar, tibbiy ma'lumotga ega emas.
 
+Har bir post UCH TILDA yoziladi. Javobingni AYNAN shu ko'rinishda ber:
+
+[UZ]
+(o'zbekcha post, lotin alifbosida)
+[RU]
+(ruscha qisqa versiya)
+[EN]
+(inglizcha qisqa versiya)
+
+HAJM (juda muhim, Telegram cheklovi bor):
+- [UZ] — 300-380 belgi
+- [RU] — 200-240 belgi
+- [EN] — 170-210 belgi
+Rus va inglizcha versiyalar to'liq tarjima emas, MOHIYATINI beruvchi qisqa versiya.
+
 QOIDALAR:
-1. Faqat o'zbek tilida (lotin alifbosida) yoz. Rus yoki ingliz so'zlarini ishlatma.
-2. Manbadagi matnni so'zma-so'z tarjima QILMA — mazmunini o'zlashtirib, o'z so'zlaring bilan qaytadan yoz.
-3. Hajmi: 90-130 so'z. JAMI 700 BELGIDAN OSHMASIN — post rasm ostiga izoh bo'lib chiqadi
-   va ostiga imzo qo'shiladi.
-4. Formatlash: <b>qalin</b> va <i>qiya</i> teglari. Boshqa HTML teg ISHLATMA.
-   Ro'yxat uchun ▪️ yoki 1️⃣ 2️⃣ 3️⃣ ishlat.
-5. Sarlavha bilan boshla (emoji + <b>qalin matn</b>).
-6. Manbada YO'Q ma'lumotni O'ZINGDAN QO'SHMA. Dori nomlari, dozalar, aniq raqamlar —
-   faqat manbada bo'lsa yoz.
-7. Hech qachon tashxis qo'yma va davolash tayinlama. Jiddiy holatlarda
+1. [UZ] bo'limi sarlavha bilan boshlanadi: emoji + <b>qalin matn</b>.
+   [RU] va [EN] bo'limlarida sarlavha SHART EMAS, to'g'ridan-to'g'ri mazmun.
+2. Manbadagi matnni so'zma-so'z tarjima QILMA — mazmunini o'z so'zlaring bilan yoz.
+3. Formatlash: faqat <b>qalin</b> va <i>qiya</i>. Boshqa HTML teg ISHLATMA.
+   Ro'yxat uchun ▪️ ishlat.
+4. Manbada YO'Q ma'lumotni O'ZINGDAN QO'SHMA. Dori nomlari, dozalar, raqamlar —
+   faqat manbada bo'lsa.
+5. Hech qachon tashxis qo'yma va davolash tayinlama. Jiddiy holatlarda
    "mutaxassisga murojaat qiling" deb yoz.
-8. Postni aynan shu qator bilan tugat:
+6. Manba havolasi va imzoni O'ZING YOZMA — ular avtomatik qo'shiladi.
 
-<i>Manba: {manba_nomi}</i>
-
-Javobingda faqat postning o'zini ber — izoh yoki muqaddima yozma."""
+Javobingda faqat [UZ] [RU] [EN] bo'limlarini ber, boshqa hech narsa yozma."""
 
 
 def log(xabar):
@@ -132,7 +144,11 @@ def post_yozdir(mavzu, burchak, manba_matni, manba_nomi):
             ).format(mavzu, burchak, manba_matni),
         }],
     )
-    return "".join(b.text for b in javob.content if b.type == "text").strip()
+    xom = "".join(b.text for b in javob.content if b.type == "text").strip()
+    bolimlar = post_tuzuvchi.bolimlarga_ajrat(xom)
+    if not bolimlar.get("UZ"):
+        raise ValueError("Model [UZ] bo'limini bermadi. Javob boshi: " + xom[:120])
+    return bolimlar
 
 
 def main():
@@ -166,17 +182,19 @@ def main():
     manba_nomi = "NIH / NIAMS" if "niams.nih.gov" in manba["url"] else "MedlinePlus (NIH)"
 
     try:
-        post = post_yozdir(manba["mavzu"], burchak, manba_matni, manba_nomi)
+        bolimlar = post_yozdir(manba["mavzu"], burchak, manba_matni, manba_nomi)
     except anthropic.APIStatusError as e:
         log("XATO: Claude API ({}): {}".format(e.status_code, e.message))
         sys.exit(1)
     except anthropic.APIConnectionError:
         log("XATO: Claude API ga ulanib bo'lmadi.")
         sys.exit(1)
-
-    if not post:
-        log("XATO: bo'sh post qaytdi.")
+    except ValueError as e:
+        log("XATO: {}".format(e))
         sys.exit(1)
+
+    post = post_tuzuvchi.yig(bolimlar, manba_nomi)
+    log("Tillar: {}".format(", ".join(sorted(bolimlar))))
 
     topilgan = rasm.rasm_top(manba.get("rasm_soz", "skincare beauty"))
     if not topilgan:
