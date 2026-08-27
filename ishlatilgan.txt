@@ -20,3 +20,4 @@ https://www.niams.nih.gov/health-topics/acne|5
 https://medlineplus.gov/bruises.html|1
 https://medlineplus.gov/hives.html|2
 https://medlineplus.gov/bruises.html|5
+https://medlineplus.gov/burns.html|4
