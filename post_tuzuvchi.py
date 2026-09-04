@@ -15,7 +15,7 @@ import re
 import telegram
 import telegraph
 
-BOLIM = re.compile(r"^\[(UZ|RU|EN)\]\s*$", re.M)
+BOLIM = re.compile(r"^\[(UZ|RU|EN|IMG)\]\s*$", re.M)
 
 ZAXIRA = 130            # imzo va rasm krediti uchun
 ENG_KAM_SPOYLER = 60

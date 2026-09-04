@@ -49,9 +49,11 @@ Har bir post UCH TILDA yoziladi. Javobingni AYNAN shu ko'rinishda ber:
 [UZ]
 (o'zbekcha post, lotin alifbosida)
 [RU]
-(ruscha qisqa versiya)
+(ruscha versiya)
 [EN]
-(inglizcha qisqa versiya)
+(inglizcha versiya)
+[IMG]
+(shu postga mos rasm uchun INGLIZ tilida 3-5 ta qidiruv so'zi)
 
 HAJM:
 - [UZ] — 300-400 belgi. Bu kanalda ochiq ko'rinadi, shuning uchun qisqa bo'lishi shart.
@@ -73,7 +75,17 @@ QOIDALAR:
    "mutaxassisga murojaat qiling" deb yoz.
 6. Manba havolasi va imzoni O'ZING YOZMA — ular avtomatik qo'shiladi.
 
-Javobingda faqat [UZ] [RU] [EN] bo'limlarini ber, boshqa hech narsa yozma."""
+[IMG] BO'LIMI (rasm sifati shunga bog'liq):
+- Ingliz tilida, 3-5 so'z. Aynan SHU POSTNING mazmuniga mos bo'lsin.
+- Stok-fotoda topiladigan CHIROYLI, ijobiy sahna tasvirlansin:
+  parvarish, krem surtish, salon, sog'lom teri, quyoshdan himoya kabi.
+- Kasallik, yara, toshma, tibbiy asbob, qon, shifoxona kabi so'zlarni ISHLATMA -
+  ular kanalga yoqimsiz rasm olib keladi.
+- Yomon misol: "acne skin disease closeup", "psoriasis lesion"
+- Yaxshi misol: "woman applying face cream", "sunscreen on beach summer",
+  "hair care routine bathroom", "clean fresh face portrait"
+
+Javobingda faqat [UZ] [RU] [EN] [IMG] bo'limlarini ber, boshqa hech narsa yozma."""
 
 
 def log(xabar):
@@ -115,17 +127,29 @@ def barcha_juftlar():
     return juftlar
 
 
-def navbatdagi_juft():
-    """Hali ishlatilmagan (manba, burchak) juftini qaytaradi."""
+def manba_nomini_top(url):
+    """Havolaga qarab manba nomini aniqlaydi."""
+    if "niams.nih.gov" in url:
+        return "NIH / NIAMS"
+    if "fda.gov" in url:
+        return "FDA (AQSH)"
+    return "MedlinePlus (NIH)"
+
+
+def navbatdagi_juftlar(nechta=5):
+    """
+    Hali ishlatilmagan birinchi `nechta` juftni qaytaradi.
+
+    Bir nechtasi kerak: agar manba sahifasi ochilmasa (sayt o'zgargan,
+    404 bo'lgan), tizim to'xtamasdan keyingisiga o'tadi.
+    """
     ishlatilgan = set()
     if ISHLATILGAN_FAYL.exists():
         ishlatilgan = set(ISHLATILGAN_FAYL.read_text(encoding="utf-8").splitlines())
 
     juftlar = barcha_juftlar()
-    for kalit, manba, burchak in juftlar:
-        if kalit not in ishlatilgan:
-            return kalit, manba, burchak, len(ishlatilgan), len(juftlar)
-    return None, None, None, len(ishlatilgan), len(juftlar)
+    qolgan = [(k, m, b) for k, m, b in juftlar if k not in ishlatilgan]
+    return qolgan[:nechta], len(ishlatilgan), len(juftlar)
 
 
 def post_yozdir(mavzu, burchak, manba_matni, manba_nomi):
@@ -164,24 +188,32 @@ def main():
         log("XATO: ANTHROPIC_API_KEY topilmadi.")
         sys.exit(1)
 
-    kalit, manba, burchak, tugagan, jami = navbatdagi_juft()
-    if kalit is None:
+    nomzodlar, tugagan, jami = navbatdagi_juftlar()
+    if not nomzodlar:
         log("Barcha {} mavzu ishlatilgan. manbalar.json ga yangi manba qo'shing.".format(jami))
         return
 
+    # Manba ochilmasa keyingisiga o'tamiz
+    kalit = manba = burchak = manba_matni = None
+    for n_kalit, n_manba, n_burchak in nomzodlar:
+        try:
+            matn = matn_ajratib_ol(n_manba["url"])
+        except Exception as e:
+            log("MANBA OCHILMADI ({}): {} - keyingisiga o'tilmoqda".format(n_manba["mavzu"], e))
+            continue
+        if len(matn) < 500:
+            log("MANBA JUDA QISQA ({}) - keyingisiga o'tilmoqda".format(n_manba["mavzu"]))
+            continue
+        kalit, manba, burchak, manba_matni = n_kalit, n_manba, n_burchak, matn
+        break
+
+    if manba_matni is None:
+        log("XATO: {} ta manbaning hech biri ochilmadi.".format(len(nomzodlar)))
+        sys.exit(1)
+
     log("Tayyorlanmoqda: {} | {}".format(manba["mavzu"], burchak[:45]))
 
-    try:
-        manba_matni = matn_ajratib_ol(manba["url"])
-    except Exception as e:
-        log("XATO: manbani yuklab bo'lmadi ({}): {}".format(manba["url"], e))
-        sys.exit(1)
-
-    if len(manba_matni) < 500:
-        log("XATO: manba matni juda qisqa, sahifa o'zgargan: {}".format(manba["url"]))
-        sys.exit(1)
-
-    manba_nomi = "NIH / NIAMS" if "niams.nih.gov" in manba["url"] else "MedlinePlus (NIH)"
+    manba_nomi = manba_nomini_top(manba["url"])
 
     try:
         bolimlar = post_yozdir(manba["mavzu"], burchak, manba_matni, manba_nomi)
@@ -198,7 +230,9 @@ def main():
     post, usul = post_tuzuvchi.yig(bolimlar, manba_nomi, manba["mavzu"])
     log("Tillar: {} | Tarjima usuli: {}".format(", ".join(sorted(bolimlar)), usul))
 
-    topilgan = rasm.rasm_top(manba.get("rasm_soz", "skincare beauty"))
+    rasm_soz = bolimlar.get("IMG", "").strip() or manba.get("rasm_soz", "skincare beauty")
+    log("Rasm qidiruvi: {}".format(rasm_soz))
+    topilgan = rasm.rasm_top(rasm_soz)
     if not topilgan:
         log("RASM YO'Q: {}".format(rasm.oxirgi_sabab))
 

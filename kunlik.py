@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Kunlik dispetcher. Navbat bilan uch manbani sinab ko'radi:
+Kunlik dispetcher.
 
-  1. postlar/    - qo'lda yozilgan postlar (bo'lsa, ular birinchi chiqadi)
-  2. kanallar    - ochiq Telegram kanallardagi yangi kosmetologiya postlari
-  3. manbalar    - NIH/NIAMS va MedlinePlus (har doim zaxirada bor)
+  1. postlar/  - qo'lda yozilgan postlar (bo'lsa, ular birinchi chiqadi)
+  2. manbalar  - ishonchli tibbiy saytlardan AI yozgan post
 
-Kanalda yangi mos post bo'lmasa (yoki hammasi reklama bo'lsa), avtomatik
-ravishda NIH manbalariga o'tadi - shu tufayli kuniga 5 ta post uzilmaydi.
+Telegram kanallardan olish olib tashlandi: manbalar noaniq ma'lumot
+berardi va sifatini nazorat qilib bo'lmasdi.
 """
 
 import subprocess
@@ -42,12 +41,6 @@ def main():
     if qolgan:
         print("Rejim: qo'lda yozilgan post (navbatda {} ta)".format(len(qolgan)))
         return ishga_tushir("yubor.py")
-
-    if (PAPKA / "kanallar.json").exists():
-        print("Rejim: kanallardan post qidirilmoqda")
-        if ishga_tushir("kanal_post.py") == 0:
-            return 0
-        print("Kanalda mos post yo'q - manbalarga o'tilmoqda")
 
     print("Rejim: manbadan AI post")
     return ishga_tushir("manba_post.py")
