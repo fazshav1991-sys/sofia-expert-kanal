@@ -24,3 +24,4 @@ https://medlineplus.gov/burns.html|4
 https://www.niams.nih.gov/health-topics/ichthyosis|3
 https://medlineplus.gov/melanoma.html|2
 https://medlineplus.gov/bruises.html|6
+https://www.fda.gov/cosmetics/resources-consumers-cosmetics/using-cosmetics-safely|5
