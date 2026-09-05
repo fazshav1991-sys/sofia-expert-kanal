@@ -26,3 +26,4 @@ https://medlineplus.gov/melanoma.html|2
 https://medlineplus.gov/bruises.html|6
 https://www.fda.gov/cosmetics/resources-consumers-cosmetics/using-cosmetics-safely|5
 https://www.niams.nih.gov/health-topics/psoriasis|1
+https://medlineplus.gov/piercingandtattoos.html|2
