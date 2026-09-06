@@ -28,3 +28,4 @@ https://www.fda.gov/cosmetics/resources-consumers-cosmetics/using-cosmetics-safe
 https://www.niams.nih.gov/health-topics/psoriasis|1
 https://medlineplus.gov/piercingandtattoos.html|2
 https://medlineplus.gov/cornsandcalluses.html|4
+https://medlineplus.gov/itching.html|2
