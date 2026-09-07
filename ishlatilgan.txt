@@ -32,3 +32,4 @@ https://medlineplus.gov/itching.html|2
 https://medlineplus.gov/skinconditions.html|1
 https://medlineplus.gov/skincancer.html|4
 https://www.niams.nih.gov/health-topics/rosacea|3
+https://www.fda.gov/cosmetics/cosmetics-labeling/shelf-life-and-expiration-dating-cosmetics|0
