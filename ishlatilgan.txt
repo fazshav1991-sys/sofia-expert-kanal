@@ -36,3 +36,4 @@ https://www.fda.gov/cosmetics/cosmetics-labeling/shelf-life-and-expiration-datin
 https://www.niams.nih.gov/health-topics/alopecia-areata|4
 https://medlineplus.gov/tanning.html|2
 https://medlineplus.gov/hairloss.html|4
+https://www.niams.nih.gov/health-topics/acne|1
