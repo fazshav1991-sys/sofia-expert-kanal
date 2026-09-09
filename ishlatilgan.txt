@@ -38,3 +38,4 @@ https://medlineplus.gov/tanning.html|2
 https://medlineplus.gov/hairloss.html|4
 https://www.niams.nih.gov/health-topics/acne|1
 https://www.fda.gov/cosmetics/resources-consumers-cosmetics/cosmetics-safety-qa-shelf-life|4
+https://www.niams.nih.gov/health-topics/hidradenitis-suppurativa-hs|1
