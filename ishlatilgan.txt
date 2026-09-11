@@ -43,3 +43,4 @@ https://medlineplus.gov/naildiseases.html|0
 https://medlineplus.gov/hives.html|3
 https://www.niams.nih.gov/health-topics/ichthyosis|1
 https://medlineplus.gov/itching.html|4
+https://medlineplus.gov/itching.html|1
