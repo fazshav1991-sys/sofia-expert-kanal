@@ -48,3 +48,4 @@ https://medlineplus.gov/hairloss.html|5
 https://www.fda.gov/cosmetics/cosmetics-labeling/shelf-life-and-expiration-dating-cosmetics|5
 https://www.fda.gov/cosmetics/resources-consumers-cosmetics/using-cosmetics-safely|4
 https://www.niams.nih.gov/health-topics/vitiligo|6
+https://medlineplus.gov/moles.html|0
