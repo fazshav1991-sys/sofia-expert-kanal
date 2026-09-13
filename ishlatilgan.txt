@@ -50,3 +50,4 @@ https://www.fda.gov/cosmetics/resources-consumers-cosmetics/using-cosmetics-safe
 https://www.niams.nih.gov/health-topics/vitiligo|6
 https://medlineplus.gov/moles.html|0
 https://medlineplus.gov/dandruffcradlecapandotherscalpconditions.html|2
+https://medlineplus.gov/tanning.html|6
