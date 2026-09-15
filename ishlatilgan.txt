@@ -53,3 +53,4 @@ https://medlineplus.gov/dandruffcradlecapandotherscalpconditions.html|2
 https://medlineplus.gov/tanning.html|6
 https://www.niams.nih.gov/health-topics/rosacea|2
 https://medlineplus.gov/melanoma.html|0
+https://www.niams.nih.gov/health-topics/atopic-dermatitis|6
