@@ -55,3 +55,4 @@ https://www.niams.nih.gov/health-topics/rosacea|2
 https://medlineplus.gov/melanoma.html|0
 https://www.niams.nih.gov/health-topics/atopic-dermatitis|6
 https://www.niams.nih.gov/health-topics/psoriasis|6
+https://www.niams.nih.gov/health-topics/acne|2
