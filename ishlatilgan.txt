@@ -57,3 +57,4 @@ https://www.niams.nih.gov/health-topics/atopic-dermatitis|6
 https://www.niams.nih.gov/health-topics/psoriasis|6
 https://www.niams.nih.gov/health-topics/acne|2
 https://medlineplus.gov/skinconditions.html|5
+https://medlineplus.gov/skincancer.html|3
