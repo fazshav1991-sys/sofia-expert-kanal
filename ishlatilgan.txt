@@ -60,3 +60,4 @@ https://medlineplus.gov/skinconditions.html|5
 https://medlineplus.gov/skincancer.html|3
 https://www.niams.nih.gov/health-topics/rosacea|1
 https://medlineplus.gov/naildiseases.html|2
+https://www.niams.nih.gov/health-topics/alopecia-areata|0
