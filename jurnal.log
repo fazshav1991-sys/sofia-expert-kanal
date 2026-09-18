@@ -262,3 +262,5 @@
 [2026-09-17 19:40:06] Tillar: EN, IMG, RU, UZ | Tarjima usuli: Telegraph havolalari
 [2026-09-17 19:40:06] Rasm qidiruvi: woman organizing makeup products vanity, clean cosmetic bottles shelf, skincare routine bathroom bright
 [2026-09-17 19:40:07] YUBORILDI: Kosmetika muddati [rasm bilan, 700 belgi] | qolgan mavzu: 202
+[2026-09-18 08:55:45] Tayyorlanmoqda: Zamburug'li infeksiyalar | Bu holat nima va nega paydo bo'ladi - sababla
+[2026-09-18 08:55:46] XATO: Claude API (400): Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CfAdDqpoV3ukkmCtVCYZD'}
