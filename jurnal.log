@@ -318,3 +318,5 @@
 [2026-09-27 09:55:33] XATO: Claude API (400): Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CfTk4WcXoYsGtgHGYe4co'}
 [2026-09-27 15:04:22] Tayyorlanmoqda: Zamburug'li infeksiyalar | Bu holat nima va nega paydo bo'ladi - sababla
 [2026-09-27 15:04:22] XATO: Claude API (400): Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CfU9cPo5dsSvWnDZKeUV7'}
+[2026-09-27 19:40:59] Tayyorlanmoqda: Zamburug'li infeksiyalar | Bu holat nima va nega paydo bo'ladi - sababla
+[2026-09-27 19:40:59] XATO: Claude API (400): Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CfUWhobtrrniFXZ25vki9'}
