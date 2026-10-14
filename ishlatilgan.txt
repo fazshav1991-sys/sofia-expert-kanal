@@ -66,3 +66,4 @@ https://medlineplus.gov/tineainfections.html|0
 https://medlineplus.gov/burns.html|1
 https://medlineplus.gov/warts.html|2
 https://medlineplus.gov/rashes.html|1
+https://medlineplus.gov/sunexposure.html|6
