@@ -68,3 +68,4 @@ https://medlineplus.gov/warts.html|2
 https://medlineplus.gov/rashes.html|1
 https://medlineplus.gov/sunexposure.html|6
 https://medlineplus.gov/dandruffcradlecapandotherscalpconditions.html|6
+https://medlineplus.gov/skinaging.html|3
