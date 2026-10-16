@@ -72,3 +72,4 @@ https://medlineplus.gov/skinaging.html|3
 https://medlineplus.gov/itching.html|5
 https://www.fda.gov/cosmetics/cosmetic-products/hair-dyes|5
 https://www.fda.gov/cosmetics/cosmetic-products/eye-cosmetic-safety|2
+https://www.niams.nih.gov/health-topics/ichthyosis|4
