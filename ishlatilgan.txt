@@ -81,3 +81,4 @@ https://www.niams.nih.gov/health-topics/hidradenitis-suppurativa-hs|4
 https://www.fda.gov/cosmetics/cosmetics-labeling/shelf-life-and-expiration-dating-cosmetics|1
 https://www.fda.gov/cosmetics/resources-consumers-cosmetics/cosmetics-safety-qa-hair-dyes|1
 https://medlineplus.gov/sunexposure.html|4
+https://www.niams.nih.gov/health-topics/alopecia-areata|2
