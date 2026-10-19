@@ -82,3 +82,4 @@ https://www.fda.gov/cosmetics/cosmetics-labeling/shelf-life-and-expiration-datin
 https://www.fda.gov/cosmetics/resources-consumers-cosmetics/cosmetics-safety-qa-hair-dyes|1
 https://medlineplus.gov/sunexposure.html|4
 https://www.niams.nih.gov/health-topics/alopecia-areata|2
+https://www.fda.gov/cosmetics/cosmetic-products/hair-dyes|0
