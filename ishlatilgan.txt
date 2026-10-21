@@ -87,3 +87,4 @@ https://www.fda.gov/cosmetics/resources-consumers-cosmetics/cosmetics-faqs|0
 https://www.niams.nih.gov/health-topics/psoriasis|5
 https://medlineplus.gov/naildiseases.html|4
 https://medlineplus.gov/skincancer.html|6
+https://www.fda.gov/cosmetics/cosmetic-products/tattoos-permanent-makeup-fact-sheet|4
