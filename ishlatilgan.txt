@@ -90,3 +90,4 @@ https://medlineplus.gov/skincancer.html|6
 https://www.fda.gov/cosmetics/cosmetic-products/tattoos-permanent-makeup-fact-sheet|4
 https://medlineplus.gov/skinpigmentationdisorders.html|2
 https://www.niams.nih.gov/health-topics/hidradenitis-suppurativa-hs|6
+https://www.fda.gov/cosmetics/resources-consumers-cosmetics/cosmetics-safety-qa-hair-dyes|4
