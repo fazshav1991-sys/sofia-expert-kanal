@@ -93,3 +93,4 @@ https://www.niams.nih.gov/health-topics/hidradenitis-suppurativa-hs|6
 https://www.fda.gov/cosmetics/resources-consumers-cosmetics/cosmetics-safety-qa-hair-dyes|4
 https://medlineplus.gov/hairproblems.html|2
 https://medlineplus.gov/scars.html|5
+https://medlineplus.gov/dandruffcradlecapandotherscalpconditions.html|1
