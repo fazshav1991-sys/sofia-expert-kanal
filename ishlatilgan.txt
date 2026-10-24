@@ -97,3 +97,4 @@ https://medlineplus.gov/dandruffcradlecapandotherscalpconditions.html|1
 https://www.fda.gov/cosmetics/resources-consumers-cosmetics/cosmetics-safety-qa-shelf-life|3
 https://www.fda.gov/cosmetics/cosmetic-products/tattoos-permanent-makeup-fact-sheet|6
 https://medlineplus.gov/scars.html|2
+https://medlineplus.gov/hairloss.html|6
