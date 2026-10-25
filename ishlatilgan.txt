@@ -99,3 +99,4 @@ https://www.fda.gov/cosmetics/cosmetic-products/tattoos-permanent-makeup-fact-sh
 https://medlineplus.gov/scars.html|2
 https://medlineplus.gov/hairloss.html|6
 https://medlineplus.gov/skinconditions.html|3
+https://medlineplus.gov/hairproblems.html|5
