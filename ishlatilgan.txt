@@ -102,3 +102,4 @@ https://medlineplus.gov/skinconditions.html|3
 https://medlineplus.gov/hairproblems.html|5
 https://medlineplus.gov/hairproblems.html|6
 https://medlineplus.gov/tineainfections.html|1
+https://medlineplus.gov/burns.html|2
