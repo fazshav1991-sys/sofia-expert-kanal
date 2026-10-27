@@ -105,3 +105,4 @@ https://medlineplus.gov/tineainfections.html|1
 https://medlineplus.gov/burns.html|2
 https://www.niams.nih.gov/health-topics/alopecia-areata|1
 https://medlineplus.gov/melanoma.html|6
+https://www.fda.gov/cosmetics/resources-consumers-cosmetics/cosmetics-safety-qa-hair-dyes|3
