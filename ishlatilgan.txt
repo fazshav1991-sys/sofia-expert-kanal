@@ -104,3 +104,4 @@ https://medlineplus.gov/hairproblems.html|6
 https://medlineplus.gov/tineainfections.html|1
 https://medlineplus.gov/burns.html|2
 https://www.niams.nih.gov/health-topics/alopecia-areata|1
+https://medlineplus.gov/melanoma.html|6
