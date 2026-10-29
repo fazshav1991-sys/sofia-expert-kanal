@@ -108,3 +108,4 @@ https://medlineplus.gov/melanoma.html|6
 https://www.fda.gov/cosmetics/resources-consumers-cosmetics/cosmetics-safety-qa-hair-dyes|3
 https://medlineplus.gov/bruises.html|3
 https://medlineplus.gov/itching.html|6
+https://medlineplus.gov/sunexposure.html|0
