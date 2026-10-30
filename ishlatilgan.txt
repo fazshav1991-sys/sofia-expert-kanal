@@ -110,3 +110,4 @@ https://medlineplus.gov/bruises.html|3
 https://medlineplus.gov/itching.html|6
 https://medlineplus.gov/sunexposure.html|0
 https://medlineplus.gov/skinpigmentationdisorders.html|6
+https://www.fda.gov/cosmetics/cosmetics-labeling/shelf-life-and-expiration-dating-cosmetics|3
