@@ -111,3 +111,4 @@ https://medlineplus.gov/itching.html|6
 https://medlineplus.gov/sunexposure.html|0
 https://medlineplus.gov/skinpigmentationdisorders.html|6
 https://www.fda.gov/cosmetics/cosmetics-labeling/shelf-life-and-expiration-dating-cosmetics|3
+https://www.niams.nih.gov/health-topics/rosacea|6
