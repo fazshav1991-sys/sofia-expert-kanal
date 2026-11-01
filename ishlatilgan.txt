@@ -115,3 +115,4 @@ https://www.niams.nih.gov/health-topics/rosacea|6
 https://medlineplus.gov/tineainfections.html|5
 https://www.fda.gov/cosmetics/resources-consumers-cosmetics/using-cosmetics-safely|6
 https://www.niams.nih.gov/health-topics/vitiligo|0
+https://www.niams.nih.gov/health-topics/psoriasis|2
