@@ -609,3 +609,5 @@ healthy glowing skin portrait
 [2026-11-03 20:01:21] XATO: Claude API (400): Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CggbBokL9DyjYczqfDwND'}
 [2026-11-04 11:58:13] Tayyorlanmoqda: Eshakyem (krapivnitsa) | Bu holat nima va nega paydo bo'ladi - sababla
 [2026-11-04 11:58:14] XATO: Claude API (400): Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011Cghr9udkPqGA7W3tBLomo'}
+[2026-11-04 20:21:39] Tayyorlanmoqda: Eshakyem (krapivnitsa) | Bu holat nima va nega paydo bo'ladi - sababla
+[2026-11-04 20:21:40] XATO: Claude API (400): Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.'}, 'request_id': 'req_011CgiWYWcDCfqeWA4cKBHNL'}
